@@ -1,20 +1,20 @@
 <template>
     <div>
-        <div if.bind="parentVisible" id="category-toolbar" ej-toolbar="e-width:100%;e-is-responsive:true">
-          <ul repeat.for="category of categories" class="e-ul e-horizontal">
-            <li>
-              <input type="checkbox" id="${category}" ej-toggle-button="e-show-rounded-corner:true;" e-on-click.trigger="toolbarNavigation($event)"/>
-              <label for="${category}">${category}</label>
-            </li>
-          </ul>
+        <div show.bind="parentVisible" id="category-toolbar" ej-toolbar="e-width: 100%; e-is-responsive: true;">
+            <ul class="e-ul e-horizontal" repeat.for="category of categories">
+              <li>
+                <input type="checkbox" id.bind="category" ej-toggle-button="e-show-rounded-corner: true;" e-on-click.delegate="toolbarNavigation($event)"/>
+                <label for.bind="category">${category}</label>
+              </li>
+            </ul>
        </div>
-       <div if.bind="childVisible" id="control-toolbar" ej-toolbar="e-width:100%;e-is-responsive:true">
-        <ul repeat.for="sub of subCategory" class="e-ul e-horizontal">
-          <li>
-            <input type="checkbox" id="${sub}" ej-toggle-button="e-show-rounded-corner:true;" e-on-click.trigger="toolbarNavigation($event)"/>
-            <label for="${sub}">${sub}</label>
-          </li>
-        </ul>
-      </div>  
+       <div show.bind="childVisible" id="control-toolbar" ej-toolbar="e-width: 100%; e-is-responsive:true;">
+           <ul class="e-ul e-horizontal" repeat.for="sub of subCategory">
+             <li>
+               <input type="checkbox" id.bind="sub" ej-toggle-button="e-show-rounded-corner: true;" e-on-click.delegate="toolbarNavigation($event)"/>
+               <label for.bind="sub">${sub}</label>
+             </li>
+           </ul>
+      </div>
    </div>
 </template>
