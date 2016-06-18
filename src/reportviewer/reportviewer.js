@@ -3,7 +3,7 @@ import {customElement, inlineView, inject, WidgetBase, constants, generateBindab
 import 'ej.reportviewer.min';
 
 @customElement(`${constants.elementPrefix}report-viewer`)
-@inlineView('<template><content></content></template>')
+@inlineView('<template><slot></slot></template>')
 @generateBindables('ejReportViewer', ['dataSources', 'enablePageCache', 'exportSettings', 'isResponsive', 'locale', 'pageSettings', 'parameters', 'printMode', 'printOptions', 'processingMode', 'renderMode', 'reportPath', 'reportServerUrl', 'reportServiceUrl', 'toolbarSettings', 'zoomFactor'])
 @inject(Element)
 export class ejReportViewer extends WidgetBase {

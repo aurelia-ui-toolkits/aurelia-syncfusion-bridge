@@ -3,7 +3,7 @@ import {customElement, inlineView, inject, WidgetBase, constants, generateBindab
 import 'ej.ribbon.min';
 
 @customElement(`${constants.elementPrefix}ribbon`)
-@inlineView('<template><content></content></template>')
+@inlineView('<template><slot></slot></template>')
 @generateBindables('ejRibbon', ['allowResizing', 'buttonDefaults', 'showQAT', 'collapsePinSettings', 'expandPinSettings', 'applicationTab', 'contextualTabs', 'disabledItemIndex', 'enabledItemIndex', 'selectedItemIndex', 'tabs', 'locale', 'width'])
 @inject(Element)
 export class ejRibbon extends WidgetBase {

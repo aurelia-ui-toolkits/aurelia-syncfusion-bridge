@@ -6,7 +6,7 @@ import {inlineView, customElement, children, constants, generateBindables, Util}
 
 export class Column {
   @children(`${constants.elementPrefix}template`) template = [];
-  bind() {
+  setTemplates() {
     if (this.template[0]) {
       let util = new Util();
       this[util.getBindablePropertyName('template')] = this.template[0].template;
