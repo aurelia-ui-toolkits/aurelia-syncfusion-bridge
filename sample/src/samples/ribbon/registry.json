@@ -12,10 +12,10 @@
         "Custom ToolTip": {
             "files": [ "html", "js"]
         },
-		
+
         "Quick Access Toolbar": {
             "files": [ "html", "js"]
-        },
-        
+        }
+
     }
 }

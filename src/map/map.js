@@ -3,11 +3,11 @@ import {inject, WidgetBase, constants, generateBindables, inlineView, customElem
 import 'datavisualization/ej.map.min';
 
 @customElement(`${constants.elementPrefix}map`)
-@inlineView('<template><content></content></template>')
+@inlineView('<template><slot></slot></template>')
 @generateBindables('ejMap', ['background', 'baseMapIndex', 'centerPosition', 'enableAnimation', 'enableLayerChangeAnimation', 'enablePan', 'enableResize', 'zoomSettings', 'navigationControl', 'layers'], ['baseMapIndex', 'enablePan', 'enableResize', 'enableAnimation', 'zoomSettings.level', 'zoomSettings.minValue', 'zoomSettings.maxValue', 'zoomSettings.factor', 'zoomSettings.enableZoom', 'zoomSettings.enableZoomOnSelection', 'navigationControl.enableNavigation', 'navigationControl.orientation', 'navigationControl.absolutePosition', 'navigationControl.dockPosition'])
 @inject(Element)
 export class ejMap extends WidgetBase {
-  @children(`${constants.elementPrefix}layer`) layers
+  @children(`${constants.elementPrefix}layer`) layers = [];
   constructor(element) {
     super();
     this.element = element;
@@ -15,4 +15,3 @@ export class ejMap extends WidgetBase {
     this.childPropertyName = 'layers';
   }
 }
-
