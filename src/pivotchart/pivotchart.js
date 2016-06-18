@@ -3,7 +3,7 @@ import {customElement, inlineView, inject, WidgetBase, constants, generateBindab
 import 'ej.pivotchart.min';
 
 @customElement(`${constants.elementPrefix}pivot-chart`)
-@inlineView('<template><content></content></template>')
+@inlineView('<template><slot></slot></template>')
 @generateBindables('ejPivotChart', ['analysisMode', 'cssClass', 'commonSeriesOptions', 'currentReport', 'dataSource', 'customObject', 'enable3D', 'isResponsive', 'legend', 'locale', 'operationalMode', 'primaryXAxis', 'primaryYAxis', 'rotation', 'serviceMethodSettings', 'size', 'url'])
 @inject(Element)
 export class ejPivotChart extends WidgetBase {

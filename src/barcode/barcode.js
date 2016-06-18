@@ -3,7 +3,7 @@ import {customElement, inlineView, inject, WidgetBase, constants, generateBindab
 import 'datavisualization/ej.barcode.min';
 
 @customElement(`${constants.elementPrefix}barcode`)
-@inlineView('<template><content></content></template>')
+@inlineView('<template><slot></slot></template>')
 @generateBindables('ejBarcode', ['barcodeToTextGapHeight', 'barHeight', 'darkBarColor', 'displayText', 'enabled', 'encodeStartStopSymbol', 'lightBarColor', 'narrowBarWidth', 'quietZone', 'symbologyType', 'text', 'textColor', 'wideBarWidth', 'xDimension'])
 @inject(Element)
 export class ejBarcode extends WidgetBase {

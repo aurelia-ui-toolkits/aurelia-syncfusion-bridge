@@ -3,11 +3,11 @@ import {inject, WidgetBase, constants, generateBindables, inlineView, customElem
 import 'datavisualization/ej.bulletgraph.min';
 
 @customElement(`${constants.elementPrefix}bullet-graph`)
-@inlineView('<template><content></content></template>')
+@inlineView('<template><slot></slot></template>')
 @generateBindables('ejBulletGraph', ['applyRangeStrokeToLabels', 'applyRangeStrokeToTicks', 'captionSettings', 'comparativeMeasureValue', 'enableAnimation', 'flowDirection', 'height', 'isResponsive', 'orientation', 'qualitativeRanges', 'qualitativeRangeSize', 'quantitativeScaleLength', 'quantitativeScaleSettings', 'theme', 'tooltipSettings', 'value', 'width'])
 @inject(Element)
 export class ejBulletGraph extends WidgetBase {
-  @children(`${constants.elementPrefix}qualitative-range`) qualitativeRanges
+  @children(`${constants.elementPrefix}qualitative-range`) qualitativeRanges = [];
   constructor(element) {
     super();
     this.element = element;
@@ -15,4 +15,3 @@ export class ejBulletGraph extends WidgetBase {
     this.childPropertyName = 'qualitativeRanges';
   }
 }
-

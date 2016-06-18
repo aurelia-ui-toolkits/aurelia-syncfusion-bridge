@@ -8,7 +8,7 @@ import {constants} from './constants';
   if (html !== '') {
     instruction.template = html;
   }
-  return true;
+  element.innerHTML = '';
 })
 @inject(TargetInstruction)
 export class Template {
