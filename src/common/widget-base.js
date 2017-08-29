@@ -10,7 +10,7 @@ export class WidgetBase {
 */
   createWidget(option) {
     this.allOption = this.getWidgetOptions(option.element);
-    if (!this.ejOptions && !this.isEditor) {
+    if (!this.ejOptions && this.isEditor) {
       this.createTwoWays();
     }
     this.eWidget = this.widget = jQuery($(option.element))[this.controlName](this.allOption).data(this.controlName);
