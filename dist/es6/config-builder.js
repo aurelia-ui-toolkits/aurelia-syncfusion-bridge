@@ -82,7 +82,6 @@ export class EjConfigBuilder {
     .ejPivotSchemaDesigner()
     .ejPivotTreeMap()
     .ejWaitingPopup()
-    .ejReportViewer()
     .ejSchedule()
     .ejUploadbox()
     .ejSignature()
@@ -384,10 +383,6 @@ export class EjConfigBuilder {
   }
   ejWaitingPopup(): EjConfigBuilder {
     this.resources.push(PLATFORM.moduleName('./waitingpopup/waitingpopup'));
-    return this;
-  }
-  ejReportViewer(): EjConfigBuilder {
-    this.resources.push(PLATFORM.moduleName('./reportviewer/reportviewer'));
     return this;
   }
   ejSchedule(): EjConfigBuilder {

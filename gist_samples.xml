@@ -1059,18 +1059,6 @@
     <SampleID>442aa3fc5a04706d4c27c5aa36fb4878</SampleID>
   </GistSamples>
   <GistSamples>
-    <SampleName>reportviewer/Territory-Sales</SampleName>
-    <SampleID>128e2d96c687708f9f2665104ac6142a</SampleID>
-  </GistSamples>
-  <GistSamples>
-    <SampleName>reportviewer/Grouping-Aggregate</SampleName>
-    <SampleID>ec499c05459a5f80981dd78a0def69fc</SampleID>
-  </GistSamples>
-  <GistSamples>
-    <SampleName>reportviewer/Area-Chart</SampleName>
-    <SampleID>2842b18c6ffda29070e2afc3859480a3</SampleID>
-  </GistSamples>
-  <GistSamples>
     <SampleName>ribbon/default</SampleName>
     <SampleID>55c5121f03409a5d82444c16f442d3d7</SampleID>
   </GistSamples>

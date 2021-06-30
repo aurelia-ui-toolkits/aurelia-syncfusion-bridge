@@ -120,7 +120,6 @@ declare module 'aurelia-syncfusion-bridge' {
     ejPivotSchemaDesigner(): EjConfigBuilder;
     ejPivotTreeMap(): EjConfigBuilder;
     ejWaitingPopup(): EjConfigBuilder;
-    ejReportViewer(): EjConfigBuilder;
     ejSchedule(): EjConfigBuilder;
     ejUploadbox(): EjConfigBuilder;
     ejSignature(): EjConfigBuilder;
@@ -132,9 +131,6 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejAccordion extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejBarcode extends WidgetBase {
-    constructor(element?: any);
-  }
   export class ejAutocomplete extends WidgetBase {
     constructor(element?: any);
   }
@@ -144,6 +140,9 @@ declare module 'aurelia-syncfusion-bridge' {
   }
   export class QualitativeRange {
   
+  }
+  export class ejBarcode extends WidgetBase {
+    constructor(element?: any);
   }
   export class ejButton extends WidgetBase {
     constructor(element?: any);
@@ -333,10 +332,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejPager extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPercentageTextbox extends WidgetBase {
+  export class ejPdfViewer extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPdfViewer extends WidgetBase {
+  export class ejPercentageTextbox extends WidgetBase {
     constructor(element?: any);
   }
   export class ejPivotChart extends WidgetBase {
@@ -348,10 +347,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejPivotGrid extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPivotTreeMap extends WidgetBase {
+  export class ejPivotSchemaDesigner extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPivotSchemaDesigner extends WidgetBase {
+  export class ejPivotTreeMap extends WidgetBase {
     constructor(element?: any);
   }
   export class ejProgressBar extends WidgetBase {
@@ -379,9 +378,6 @@ declare module 'aurelia-syncfusion-bridge' {
   
   }
   export class ejRating extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejReportViewer extends WidgetBase {
     constructor(element?: any);
   }
   export class ejRibbon extends WidgetBase {

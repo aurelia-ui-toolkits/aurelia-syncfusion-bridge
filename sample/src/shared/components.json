@@ -262,11 +262,5 @@
             "status": "done",
             "moduleId": "waitingpopup"
         }
-    },
-    "Reporting": {
-        "ReportViewer": {
-            "status": "done",
-            "moduleId": "reportviewer"
-        }
     }
 }
