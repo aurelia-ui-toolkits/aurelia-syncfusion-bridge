@@ -159,9 +159,6 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejColorPicker extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejComboBox extends WidgetBase {
-    constructor(element?: any);
-  }
   export {
     customAttribute,
     bindable,
@@ -240,6 +237,9 @@ declare module 'aurelia-syncfusion-bridge' {
     update(e?: any): any;
     detached(): any;
   }
+  export class ejComboBox extends WidgetBase {
+    constructor(element?: any);
+  }
   export class ejCurrencyTextbox extends WidgetBase {
     constructor(element?: any);
   }
@@ -313,10 +313,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejMaskEdit extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejNavigationDrawer extends WidgetBase {
+  export class ejMenu extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejMenu extends WidgetBase {
+  export class ejNavigationDrawer extends WidgetBase {
     constructor(element?: any);
   }
   export class ejNumericTextbox extends WidgetBase {
@@ -334,10 +334,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejPercentageTextbox extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPivotGauge extends WidgetBase {
+  export class ejPivotChart extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPivotChart extends WidgetBase {
+  export class ejPivotGauge extends WidgetBase {
     constructor(element?: any);
   }
   export class ejPivotGrid extends WidgetBase {
