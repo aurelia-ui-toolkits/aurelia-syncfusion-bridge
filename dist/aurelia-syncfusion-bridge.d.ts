@@ -159,84 +159,6 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejColorPicker extends WidgetBase {
     constructor(element?: any);
   }
-  export {
-    customAttribute,
-    bindable,
-    inject,
-    inlineView,
-    customElement,
-    children,
-    TemplatingEngine
-  };
-  export const constants: any;
-  export function generateBindables(controlName?: any, inputs?: any, twoWayProperties?: any, abbrevProperties?: any, observerCollection?: any): any;
-  export function delayed(): any;
-  
-  /**
-  * To get binded events from the element
-  * @param element The Element from which events acquired
-  */
-  export function getEventOption(element?: any): any;
-  
-  /**
-  * Fire DOM event on an element
-  * @param element The Element which the DOM event will be fired on
-  * @param name The Event's name
-  * @param data Addition data to attach to an event
-  */
-  export function fireEvent(element: Element, name: string, data?: any): any;
-  export class TemplateProcessor {
-    constructor(context?: any, templateEngine?: any);
-    initTemplate(): any;
-    initWidgetDependancies(): any;
-    renderStringTemplate(self?: any, selector?: any, data?: any, index?: any): any;
-    compileTemplate(element?: any): any;
-    clearTempalte(): any;
-    unbindViews(obj?: any): any;
-  }
-  export class Template {
-    template: any;
-    constructor(target?: any);
-  }
-  export class Util {
-    getBindablePropertyName(propertyName: string): string;
-    _unhyphenate(name: string): string;
-    getOptions(model?: any, properties?: any): any;
-    getControlPropertyName(options?: any, propertyName?: any): any;
-    hasValue(prop?: any): any;
-    processData(value?: any): any;
-  }
-  export class WidgetBase {
-    
-    /**
-    * To Create an widget
-    * @param option Object which contains  Element in which  widget will be created
-    */
-    createWidget(option?: any): any;
-    bind(ctx?: any, overrideCtx?: any): any;
-    createTwoWays(): any;
-    addTwoways(prop?: any): any;
-    
-    /**
-    * To get property and event options from the element
-    * @param element Element from which options are acquired
-    */
-    getWidgetOptions(element?: any): any;
-    getChildProperties(options?: any): any;
-    attached(): any;
-    unsubscribe(): any;
-    unbind(): any;
-    
-    /**
-     * To change widget model value
-     * @param property The viewModel property name
-     * @param newValue New value of the property
-     * @param oldvalue Pld value of the property
-     */
-    propertyChanged(property?: any, newValue?: any, oldValue?: any): any;
-    update(e?: any): any;
-    detached(): any;
-  }
   export class ejComboBox extends WidgetBase {
     constructor(element?: any);
   }
@@ -412,6 +334,84 @@ declare module 'aurelia-syncfusion-bridge' {
   }
   export class ejSplitter extends WidgetBase {
     constructor(element?: any);
+  }
+  export {
+    customAttribute,
+    bindable,
+    inject,
+    inlineView,
+    customElement,
+    children,
+    TemplatingEngine
+  };
+  export const constants: any;
+  export function generateBindables(controlName?: any, inputs?: any, twoWayProperties?: any, abbrevProperties?: any, observerCollection?: any): any;
+  export function delayed(): any;
+  
+  /**
+  * To get binded events from the element
+  * @param element The Element from which events acquired
+  */
+  export function getEventOption(element?: any): any;
+  
+  /**
+  * Fire DOM event on an element
+  * @param element The Element which the DOM event will be fired on
+  * @param name The Event's name
+  * @param data Addition data to attach to an event
+  */
+  export function fireEvent(element: Element, name: string, data?: any): any;
+  export class TemplateProcessor {
+    constructor(context?: any, templateEngine?: any);
+    initTemplate(): any;
+    initWidgetDependancies(): any;
+    renderStringTemplate(self?: any, selector?: any, data?: any, index?: any): any;
+    compileTemplate(element?: any): any;
+    clearTempalte(): any;
+    unbindViews(obj?: any): any;
+  }
+  export class Template {
+    template: any;
+    constructor(target?: any);
+  }
+  export class Util {
+    getBindablePropertyName(propertyName: string): string;
+    _unhyphenate(name: string): string;
+    getOptions(model?: any, properties?: any): any;
+    getControlPropertyName(options?: any, propertyName?: any): any;
+    hasValue(prop?: any): any;
+    processData(value?: any): any;
+  }
+  export class WidgetBase {
+    
+    /**
+    * To Create an widget
+    * @param option Object which contains  Element in which  widget will be created
+    */
+    createWidget(option?: any): any;
+    bind(ctx?: any, overrideCtx?: any): any;
+    createTwoWays(): any;
+    addTwoways(prop?: any): any;
+    
+    /**
+    * To get property and event options from the element
+    * @param element Element from which options are acquired
+    */
+    getWidgetOptions(element?: any): any;
+    getChildProperties(options?: any): any;
+    attached(): any;
+    unsubscribe(): any;
+    unbind(): any;
+    
+    /**
+     * To change widget model value
+     * @param property The viewModel property name
+     * @param newValue New value of the property
+     * @param oldvalue Pld value of the property
+     */
+    propertyChanged(property?: any, newValue?: any, oldValue?: any): any;
+    update(e?: any): any;
+    detached(): any;
   }
   export class Sheet {
   

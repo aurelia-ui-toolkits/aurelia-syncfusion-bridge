@@ -561,480 +561,6 @@ export class ejColorPicker extends WidgetBase {
 }
 
 
-export {customAttribute, bindable, inject, inlineView, customElement, children, TemplatingEngine};
-
-export const constants = {
-  eventPrefix: 'e-on-',
-  bindablePrefix: 'e-',
-  attributePrefix: 'ej-',
-  elementPrefix: 'ej-',
-  aureliaTemplateString: '<template><slot></slot></template>'
-};
-
-export function generateBindables(controlName, inputs, twoWayProperties, abbrevProperties, observerCollection) {
-  return function(target, key, descriptor) {
-    let behaviorResource = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, target);
-    let container = (Container.instance || new Container());
-    let util = container.get(Util);
-    let bindingInstance = container.get(BindingEngine);
-    inputs.push('options');
-    inputs.push('widget');
-    let len = inputs.length;
-    if (observerCollection) {
-      target.prototype.arrayObserver = [];
-      observerCollection.forEach((element) => {
-        target.prototype.arrayObserver.push(util.getBindablePropertyName(element));
-      });
-      target.prototype.bindingInstance = bindingInstance;
-    }
-    target.prototype.controlName = controlName;
-    target.prototype.twoWays = twoWayProperties ? twoWayProperties : [];
-    target.prototype.abbrevProperties = abbrevProperties ? abbrevProperties : [];
-    if (len) {
-      target.prototype.controlProperties = inputs;
-      for (let i = 0; i < len; i++) {
-        let option = inputs[i];
-        if (abbrevProperties && option in abbrevProperties) {
-          option = abbrevProperties[option];
-          option.forEach((prop) => {
-            registerProp(util, prop, target, behaviorResource, descriptor);
-          });
-        } else {
-          registerProp(util, option, target, behaviorResource, descriptor);
-        }
-      }
-    }
-  };
-}
-
-function registerProp(util, option, target, behaviorResource, descriptor) {
-  let nameOrConfigOrTarget = {
-    name: util.getBindablePropertyName(option)
-  };
-
-  if (option === 'widget') {
-    nameOrConfigOrTarget.defaultBindingMode = bindingMode.twoWay;
-  }
-
-  let prop = new BindableProperty(nameOrConfigOrTarget);
-  prop.registerWith(target, behaviorResource, descriptor);
-}
-
-export function delayed() {
-  return function(target, key, descriptor) {
-    let taskQueue = (Container.instance || new Container()).get(TaskQueue);
-    let ptr = descriptor.value;
-
-    descriptor.value = function(...args) {
-      if (this.childPropertyName) {
-        taskQueue.queueTask(() => ptr.apply(this, args));
-      } else {
-        ptr.apply(this, args);
-      }
-    };
-
-    return descriptor;
-  };
-}
-
-/**
-* To get binded events from the element
-* @param element The Element from which events acquired
-*/
-export function getEventOption(element) {
-  let name;
-  let attr;
-  let attributes = element.attributes;
-  let option = {};
-  let container = (Container.instance || new Container());
-  let util = container.get(Util);
-  for (let i = 0, len = attributes.length; i < len; i++) {
-    attr = attributes[i];
-    name = attr.name;
-    if (!name.startsWith(constants.eventPrefix)) {
-      continue;
-    }
-    let actualEventName = name.split('.')[0];//Event name with constants event prefix
-    let eventName = util._unhyphenate(actualEventName.split(constants.eventPrefix)[1]);
-    option[eventName] = e => fireEvent(element, actualEventName, e);  // eslint-disable-line no-loop-func
-  }
-  return option;
-}
-/**
-* Fire DOM event on an element
-* @param element The Element which the DOM event will be fired on
-* @param name The Event's name
-* @param data Addition data to attach to an event
-*/
-export function fireEvent(element: Element, name: string, data? = {}) {
-  let event = new CustomEvent(name, {
-    detail: data,
-    bubbles: true
-  });
-  element.dispatchEvent(event);
-  return event;
-}
-
-@inject(TemplatingEngine, Util)
-export class TemplateProcessor {
-
-  constructor(context, templateEngine) {
-    this.context = context;
-    this.templatingEngine = templateEngine;
-    this.util = new Util();
-  }
-
-  initTemplate() {
-    let proxy = this;
-    ej.template.render = function(self, selector, data, index) {
-      return proxy.renderStringTemplate(self, selector, data, index);
-    };
-  }
-
-  initWidgetDependancies() {
-    if ( this.context.widget.aureliaTemplate) {
-      this.compileTemplate(this.context.widget.element);
-    }
-    let proxy =  this.context;
-    let element =  this.context.widget.element;
-    element.on( this.context.widget.pluginName + 'refresh', function() {
-      if (proxy.widget.aureliaTemplate) {
-        proxy.templateProcessor.compileTemplate(element);
-      }
-    });
-  }
-
-  renderStringTemplate(self, selector, data, index) {
-    let templateObject = self.aureliaTemplate;
-    if (!templateObject || !templateObject[selector]) {
-      templateObject = templateObject || {};
-      templateObject[selector] = { key: ej.getGuid('aurtmpl'), itemData: [], views: [] };
-      self.aureliaTemplate = templateObject;
-    }
-    let scope = templateObject[selector];
-    if (this.util.hasValue(index)) {
-      scope.itemData[index] = data;
-    } else {
-      scope.itemData = [data];
-    }
-    let actElement = $(selector).html();
-    let tempElement = "<div ej-prop='" + index + "' class='" + templateObject[selector].key + " ej-aurelia-template'>" + actElement + '</div>';
-    return tempElement;
-  }
-
-  compileTemplate(element) {
-    let templates = $(element).find('.ej-aurelia-template');
-    let templateObject =  this.context.widget.aureliaTemplate;
-    for (let template in templateObject) {
-      let tmplElement = templates.filter('.' + templateObject[template].key);
-      if (tmplElement.length) {
-        for (let i = 0; i < tmplElement.length; i++) {
-          let dataIndex = parseInt($(tmplElement[i]).attr('ej-prop'));// eslint-disable-line radix
-          let view = this.templatingEngine.enhance(tmplElement[i]);
-          view.bind(templateObject[template].itemData[dataIndex], this.context.parentCtx);
-          templateObject[template].views[dataIndex] = view;
-        }
-      } else {
-        this.unbindViews(templateObject[template]);
-        delete templateObject[template];
-      }
-    }
-  }
-
-  clearTempalte() {
-    let templateObject =  this.context.widget.aureliaTemplate;
-    if (templateObject && Object.keys(templateObject).length) {
-      for (let t in templateObject) {
-        this.unbindViews(templateObject[t]);
-        delete templateObject[t];
-      }
-    }
-  }
-
-  unbindViews(obj) {
-    for (let i = 0; i < obj.views.length; i++) {
-      let view = obj.views[i];
-      view.unbind();
-    }
-  }
-
-}
-
-@customElement(`${constants.elementPrefix}template`)
-@noView()
-@processContent((compiler, resources, element, instruction) => {
-  let html = element.innerHTML;
-  if (html !== '') {
-    instruction.template = html;
-  }
-  element.innerHTML = '';
-})
-@inject(TargetInstruction)
-export class Template {
-  @bindable template;
-  constructor(target) {
-    this.template = target.elementInstruction.template;
-  }
-
-}
-
-export class Util {
-
-  getBindablePropertyName(propertyName: string): string {
-    let name = `${constants.bindablePrefix}${propertyName}`;
-    return this._unhyphenate(name);
-  }
-
-  _unhyphenate(name: string): string {
-    return name.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-  }
-
-  getOptions(model, properties ) {
-    let bindableproperites = {};
-    let value;
-    for (let prop of properties) {
-      if (model.abbrevProperties && prop in model.abbrevProperties && model.abbrevProperties.hasOwnProperty(prop)) {
-        model.abbrevProperties[prop].some(property => {
-          value = model[this.getBindablePropertyName(property)];
-          return this.hasValue(value);
-        });
-      } else {
-        value = model[this.getBindablePropertyName(prop)];
-      }
-      if (this.hasValue(value)) {
-        if (typeof value === 'string' ) {
-          value = this.processData(value);
-        }
-        bindableproperites[prop] = value;
-      }
-    }
-    return bindableproperites;
-  }
-
-  getControlPropertyName(options, propertyName) {
-    let property;
-    for (let prop of options.controlProperties) {
-      if (options.abbrevProperties && prop in options.abbrevProperties && options.abbrevProperties.hasOwnProperty(prop)) {
-        options.abbrevProperties[prop].some(props => {
-          property = propertyName === this.getBindablePropertyName(props) ? prop : undefined;
-          return property;
-        });
-        if (property) break;
-      } else if (propertyName === this.getBindablePropertyName(prop)) {
-        property = prop;
-        break;
-      }
-    }
-    return property;
-  }
-
-  hasValue(prop) {
-    return typeof (prop) !== 'undefined' && prop !== null;
-  }
-
-  processData(value) {
-    if (value === 'true') {
-      return true;
-    } else if (value === 'false') {
-      return false;
-    } else if (+value + '' === value) {
-      return +value;
-    }
-    return value;
-  }
-}
-
-let firstValue = {};
-export class WidgetBase {
-/**
-* To Create an widget
-* @param option Object which contains  Element in which  widget will be created
-*/
-  createWidget(option) {
-    this.allOption = this.getWidgetOptions(option.element);
-    if (!this.ejOptions && !this.isEditor) {
-      this.createTwoWays();
-    }
-    this.eWidget = this.widget = jQuery($(option.element))[this.controlName](this.allOption).data(this.controlName);
-    if (this.templateProcessor) {
-      this.templateProcessor.initWidgetDependancies();
-    }
-    if (this.isEditor) {
-      this.widget.model._change = (evt) => {
-        if ('eValue' in this) {
-          this[this.util.getBindablePropertyName('value')] = evt.value;
-        }
-      };
-    }
-  }
-
-  bind(ctx, overrideCtx) {
-    this.parentCtx = overrideCtx;
-    if (this.widget && this.widget.element && this.isEditor) {
-      this.widget.option('value', (this.eValue === undefined ? null : this.eValue));
-    }
-  }
-
-  createTwoWays() {
-    let model = this.allOption;
-    let twoWays = this.twoWays;
-    let len = twoWays.length;
-    for (let i = 0; i < len; i++) {
-      let prop = twoWays[i];
-      ej.createObject(prop, this.addTwoways(prop), model);
-    }
-  }
-
-  addTwoways(prop) {
-    let model = this;
-    let value = firstValue;
-    return function(newVal, isApp) {
-      if (value === firstValue) {
-        let viewModelProp = model.util.getBindablePropertyName(prop);
-        value = model[viewModelProp];
-        if (value === undefined) {
-          value = this.defaults[prop];
-        }
-        return value;
-      }
-      if (newVal === undefined) {
-        return value;
-      }
-      if (value === newVal) {
-        return null;
-      }
-      value = newVal;
-      if (!isApp && model.util.hasValue(newVal) ) {
-        let viewModelProp = model.util.getBindablePropertyName(prop);
-        model[viewModelProp] = newVal;
-      }
-      return null;
-    };
-  }
-/**
-* To get property and event options from the element
-* @param element Element from which options are acquired
-*/
-  getWidgetOptions(element) {
-    let propOptions;
-    if (this.ejOptions) {
-      propOptions = this.ejOptions;
-    } else {
-      propOptions = this.util.getOptions(this, this.controlProperties);
-    }
-    let eventOption = getEventOption(element);
-    if (this.hasChildProperty) {
-      this.getChildProperties(propOptions);
-    }
-    return Object.assign({}, propOptions, eventOption);
-  }
-
-  getChildProperties(options) {
-    let PropertyName = this.childPropertyName;
-    let childCollection = this[PropertyName];
-    let len = childCollection.length;
-    if (len) {
-      options[PropertyName] = [];
-      let childProperties = childCollection[0].controlProperties;
-      for (let i = 0; i < len; i++) {
-        options[PropertyName].push(this.util.getOptions(childCollection[i], childProperties));
-      }
-    }
-  }
-
-  @delayed()
-  attached() {
-    if (this.templateProcessor) {
-      this[this.childPropertyName].forEach(template => template.setTemplates());
-    }
-    this.util = new Util();
-    this.createWidget({ element: this.element });
-  }
-
-  unsubscribe() {
-    if (this.subscription) {
-      this.subscription.dispose();
-      this.subscription = null;
-    }
-  }
-
-  unbind() {
-    this.unsubscribe();
-  }
-
-/**
- * To change widget model value
- * @param property The viewModel property name
- * @param newValue New value of the property
- * @param oldvalue Pld value of the property
- */
-  propertyChanged(property, newValue, oldValue) {
-    if (this.widget) {
-      let modelValue;
-      let prop = this.util.getControlPropertyName(this, property);
-      this.unsubscribe();
-      if (this.arrayObserver) {
-        this.arrayObserver.forEach((arrayProp) => {
-          if (this[arrayProp] instanceof Array) {
-            this.subscription = this.bindingInstance.collectionObserver(this[arrayProp]).subscribe((e) => {
-              this.update(e);
-            });
-          }
-        });
-      }
-      if (prop) {
-        if (prop === 'widget') {
-          return;
-        } else if (prop !== 'options') {
-          modelValue = this.widget.model[prop];
-          let isTwoway = typeof modelValue === 'function';
-          if (isTwoway) {
-            modelValue = modelValue();
-          }
-          if (modelValue !== newValue) {
-            if (isTwoway) {
-              newValue = this.addTwoways(prop);
-            }
-            this.widget.option(prop, newValue);
-          }
-        } else {
-          this.widget.option(newValue);
-        }
-      }
-    }
-  }
-
-  update(e) {
-    let modelValue;
-    let newVal;
-    if (e.length) {
-      this.arrayObserver.forEach((arrayProp) => {
-        if (this[arrayProp] instanceof Array) {
-          let prop = this.util.getControlPropertyName(this, arrayProp);
-          modelValue = this.widget.model[prop];
-          if (typeof modelValue === 'function') {
-            modelValue = modelValue();
-            newVal = modelValue;
-            newVal = this.addTwoways(prop);
-            this.widget.option(prop, newVal);
-          } else {
-            this.widget.option(prop, modelValue);
-          }
-        }
-      });
-    }
-  }
-
-  detached() {
-    if (this.templateProcessor) {
-      this.templateProcessor.clearTempalte();
-    }
-    if (this.widget) {
-      this.widget.destroy();
-    }
-  }
-}
-
 @customAttribute(`${constants.attributePrefix}combo-box`)
 @generateBindables('ejComboBox', ['actionFailureTemplate', 'allowCustom', 'allowFiltering', 'autofill', 'cssClass', 'dataSource', 'enableRtl', 'enabled', 'fields', 'footerTemplate', 'groupTemplate', 'headerTemplate', 'htmlAttributes', 'index', 'itemTemplate', 'locale', 'noRecordsTemplate', 'placeholder', 'popupHeight', 'popupWidth', 'query', 'readonly', 'showClearButton', 'sortOrder', 'text', 'value', 'width'], ['value'])
 @inject(Element)
@@ -1713,6 +1239,480 @@ export class ejSplitter extends WidgetBase {
   }
 }
 
+
+export {customAttribute, bindable, inject, inlineView, customElement, children, TemplatingEngine};
+
+export const constants = {
+  eventPrefix: 'e-on-',
+  bindablePrefix: 'e-',
+  attributePrefix: 'ej-',
+  elementPrefix: 'ej-',
+  aureliaTemplateString: '<template><slot></slot></template>'
+};
+
+export function generateBindables(controlName, inputs, twoWayProperties, abbrevProperties, observerCollection) {
+  return function(target, key, descriptor) {
+    let behaviorResource = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, target);
+    let container = (Container.instance || new Container());
+    let util = container.get(Util);
+    let bindingInstance = container.get(BindingEngine);
+    inputs.push('options');
+    inputs.push('widget');
+    let len = inputs.length;
+    if (observerCollection) {
+      target.prototype.arrayObserver = [];
+      observerCollection.forEach((element) => {
+        target.prototype.arrayObserver.push(util.getBindablePropertyName(element));
+      });
+      target.prototype.bindingInstance = bindingInstance;
+    }
+    target.prototype.controlName = controlName;
+    target.prototype.twoWays = twoWayProperties ? twoWayProperties : [];
+    target.prototype.abbrevProperties = abbrevProperties ? abbrevProperties : [];
+    if (len) {
+      target.prototype.controlProperties = inputs;
+      for (let i = 0; i < len; i++) {
+        let option = inputs[i];
+        if (abbrevProperties && option in abbrevProperties) {
+          option = abbrevProperties[option];
+          option.forEach((prop) => {
+            registerProp(util, prop, target, behaviorResource, descriptor);
+          });
+        } else {
+          registerProp(util, option, target, behaviorResource, descriptor);
+        }
+      }
+    }
+  };
+}
+
+function registerProp(util, option, target, behaviorResource, descriptor) {
+  let nameOrConfigOrTarget = {
+    name: util.getBindablePropertyName(option)
+  };
+
+  if (option === 'widget') {
+    nameOrConfigOrTarget.defaultBindingMode = bindingMode.twoWay;
+  }
+
+  let prop = new BindableProperty(nameOrConfigOrTarget);
+  prop.registerWith(target, behaviorResource, descriptor);
+}
+
+export function delayed() {
+  return function(target, key, descriptor) {
+    let taskQueue = (Container.instance || new Container()).get(TaskQueue);
+    let ptr = descriptor.value;
+
+    descriptor.value = function(...args) {
+      if (this.childPropertyName) {
+        taskQueue.queueTask(() => ptr.apply(this, args));
+      } else {
+        ptr.apply(this, args);
+      }
+    };
+
+    return descriptor;
+  };
+}
+
+/**
+* To get binded events from the element
+* @param element The Element from which events acquired
+*/
+export function getEventOption(element) {
+  let name;
+  let attr;
+  let attributes = element.attributes;
+  let option = {};
+  let container = (Container.instance || new Container());
+  let util = container.get(Util);
+  for (let i = 0, len = attributes.length; i < len; i++) {
+    attr = attributes[i];
+    name = attr.name;
+    if (!name.startsWith(constants.eventPrefix)) {
+      continue;
+    }
+    let actualEventName = name.split('.')[0];//Event name with constants event prefix
+    let eventName = util._unhyphenate(actualEventName.split(constants.eventPrefix)[1]);
+    option[eventName] = e => fireEvent(element, actualEventName, e);  // eslint-disable-line no-loop-func
+  }
+  return option;
+}
+/**
+* Fire DOM event on an element
+* @param element The Element which the DOM event will be fired on
+* @param name The Event's name
+* @param data Addition data to attach to an event
+*/
+export function fireEvent(element: Element, name: string, data? = {}) {
+  let event = new CustomEvent(name, {
+    detail: data,
+    bubbles: true
+  });
+  element.dispatchEvent(event);
+  return event;
+}
+
+@inject(TemplatingEngine, Util)
+export class TemplateProcessor {
+
+  constructor(context, templateEngine) {
+    this.context = context;
+    this.templatingEngine = templateEngine;
+    this.util = new Util();
+  }
+
+  initTemplate() {
+    let proxy = this;
+    ej.template.render = function(self, selector, data, index) {
+      return proxy.renderStringTemplate(self, selector, data, index);
+    };
+  }
+
+  initWidgetDependancies() {
+    if ( this.context.widget.aureliaTemplate) {
+      this.compileTemplate(this.context.widget.element);
+    }
+    let proxy =  this.context;
+    let element =  this.context.widget.element;
+    element.on( this.context.widget.pluginName + 'refresh', function() {
+      if (proxy.widget.aureliaTemplate) {
+        proxy.templateProcessor.compileTemplate(element);
+      }
+    });
+  }
+
+  renderStringTemplate(self, selector, data, index) {
+    let templateObject = self.aureliaTemplate;
+    if (!templateObject || !templateObject[selector]) {
+      templateObject = templateObject || {};
+      templateObject[selector] = { key: ej.getGuid('aurtmpl'), itemData: [], views: [] };
+      self.aureliaTemplate = templateObject;
+    }
+    let scope = templateObject[selector];
+    if (this.util.hasValue(index)) {
+      scope.itemData[index] = data;
+    } else {
+      scope.itemData = [data];
+    }
+    let actElement = $(selector).html();
+    let tempElement = "<div ej-prop='" + index + "' class='" + templateObject[selector].key + " ej-aurelia-template'>" + actElement + '</div>';
+    return tempElement;
+  }
+
+  compileTemplate(element) {
+    let templates = $(element).find('.ej-aurelia-template');
+    let templateObject =  this.context.widget.aureliaTemplate;
+    for (let template in templateObject) {
+      let tmplElement = templates.filter('.' + templateObject[template].key);
+      if (tmplElement.length) {
+        for (let i = 0; i < tmplElement.length; i++) {
+          let dataIndex = parseInt($(tmplElement[i]).attr('ej-prop'));// eslint-disable-line radix
+          let view = this.templatingEngine.enhance(tmplElement[i]);
+          view.bind(templateObject[template].itemData[dataIndex], this.context.parentCtx);
+          templateObject[template].views[dataIndex] = view;
+        }
+      } else {
+        this.unbindViews(templateObject[template]);
+        delete templateObject[template];
+      }
+    }
+  }
+
+  clearTempalte() {
+    let templateObject =  this.context.widget.aureliaTemplate;
+    if (templateObject && Object.keys(templateObject).length) {
+      for (let t in templateObject) {
+        this.unbindViews(templateObject[t]);
+        delete templateObject[t];
+      }
+    }
+  }
+
+  unbindViews(obj) {
+    for (let i = 0; i < obj.views.length; i++) {
+      let view = obj.views[i];
+      view.unbind();
+    }
+  }
+
+}
+
+@customElement(`${constants.elementPrefix}template`)
+@noView()
+@processContent((compiler, resources, element, instruction) => {
+  let html = element.innerHTML;
+  if (html !== '') {
+    instruction.template = html;
+  }
+  element.innerHTML = '';
+})
+@inject(TargetInstruction)
+export class Template {
+  @bindable template;
+  constructor(target) {
+    this.template = target.elementInstruction.template;
+  }
+
+}
+
+export class Util {
+
+  getBindablePropertyName(propertyName: string): string {
+    let name = `${constants.bindablePrefix}${propertyName}`;
+    return this._unhyphenate(name);
+  }
+
+  _unhyphenate(name: string): string {
+    return name.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+  }
+
+  getOptions(model, properties ) {
+    let bindableproperites = {};
+    let value;
+    for (let prop of properties) {
+      if (model.abbrevProperties && prop in model.abbrevProperties && model.abbrevProperties.hasOwnProperty(prop)) {
+        model.abbrevProperties[prop].some(property => {
+          value = model[this.getBindablePropertyName(property)];
+          return this.hasValue(value);
+        });
+      } else {
+        value = model[this.getBindablePropertyName(prop)];
+      }
+      if (this.hasValue(value)) {
+        if (typeof value === 'string' ) {
+          value = this.processData(value);
+        }
+        bindableproperites[prop] = value;
+      }
+    }
+    return bindableproperites;
+  }
+
+  getControlPropertyName(options, propertyName) {
+    let property;
+    for (let prop of options.controlProperties) {
+      if (options.abbrevProperties && prop in options.abbrevProperties && options.abbrevProperties.hasOwnProperty(prop)) {
+        options.abbrevProperties[prop].some(props => {
+          property = propertyName === this.getBindablePropertyName(props) ? prop : undefined;
+          return property;
+        });
+        if (property) break;
+      } else if (propertyName === this.getBindablePropertyName(prop)) {
+        property = prop;
+        break;
+      }
+    }
+    return property;
+  }
+
+  hasValue(prop) {
+    return typeof (prop) !== 'undefined' && prop !== null;
+  }
+
+  processData(value) {
+    if (value === 'true') {
+      return true;
+    } else if (value === 'false') {
+      return false;
+    } else if (+value + '' === value) {
+      return +value;
+    }
+    return value;
+  }
+}
+
+let firstValue = {};
+export class WidgetBase {
+/**
+* To Create an widget
+* @param option Object which contains  Element in which  widget will be created
+*/
+  createWidget(option) {
+    this.allOption = this.getWidgetOptions(option.element);
+    if (!this.ejOptions && !this.isEditor) {
+      this.createTwoWays();
+    }
+    this.eWidget = this.widget = jQuery($(option.element))[this.controlName](this.allOption).data(this.controlName);
+    if (this.templateProcessor) {
+      this.templateProcessor.initWidgetDependancies();
+    }
+    if (this.isEditor) {
+      this.widget.model._change = (evt) => {
+        if ('eValue' in this) {
+          this[this.util.getBindablePropertyName('value')] = evt.value;
+        }
+      };
+    }
+  }
+
+  bind(ctx, overrideCtx) {
+    this.parentCtx = overrideCtx;
+    if (this.widget && this.widget.element && this.isEditor) {
+      this.widget.option('value', (this.eValue === undefined ? null : this.eValue));
+    }
+  }
+
+  createTwoWays() {
+    let model = this.allOption;
+    let twoWays = this.twoWays;
+    let len = twoWays.length;
+    for (let i = 0; i < len; i++) {
+      let prop = twoWays[i];
+      ej.createObject(prop, this.addTwoways(prop), model);
+    }
+  }
+
+  addTwoways(prop) {
+    let model = this;
+    let value = firstValue;
+    return function(newVal, isApp) {
+      if (value === firstValue) {
+        let viewModelProp = model.util.getBindablePropertyName(prop);
+        value = model[viewModelProp];
+        if (value === undefined) {
+          value = this.defaults[prop];
+        }
+        return value;
+      }
+      if (newVal === undefined) {
+        return value;
+      }
+      if (value === newVal) {
+        return null;
+      }
+      value = newVal;
+      if (!isApp && model.util.hasValue(newVal) ) {
+        let viewModelProp = model.util.getBindablePropertyName(prop);
+        model[viewModelProp] = newVal;
+      }
+      return null;
+    };
+  }
+/**
+* To get property and event options from the element
+* @param element Element from which options are acquired
+*/
+  getWidgetOptions(element) {
+    let propOptions;
+    if (this.ejOptions) {
+      propOptions = this.ejOptions;
+    } else {
+      propOptions = this.util.getOptions(this, this.controlProperties);
+    }
+    let eventOption = getEventOption(element);
+    if (this.hasChildProperty) {
+      this.getChildProperties(propOptions);
+    }
+    return Object.assign({}, propOptions, eventOption);
+  }
+
+  getChildProperties(options) {
+    let PropertyName = this.childPropertyName;
+    let childCollection = this[PropertyName];
+    let len = childCollection.length;
+    if (len) {
+      options[PropertyName] = [];
+      let childProperties = childCollection[0].controlProperties;
+      for (let i = 0; i < len; i++) {
+        options[PropertyName].push(this.util.getOptions(childCollection[i], childProperties));
+      }
+    }
+  }
+
+  @delayed()
+  attached() {
+    if (this.templateProcessor) {
+      this[this.childPropertyName].forEach(template => template.setTemplates());
+    }
+    this.util = new Util();
+    this.createWidget({ element: this.element });
+  }
+
+  unsubscribe() {
+    if (this.subscription) {
+      this.subscription.dispose();
+      this.subscription = null;
+    }
+  }
+
+  unbind() {
+    this.unsubscribe();
+  }
+
+/**
+ * To change widget model value
+ * @param property The viewModel property name
+ * @param newValue New value of the property
+ * @param oldvalue Pld value of the property
+ */
+  propertyChanged(property, newValue, oldValue) {
+    if (this.widget) {
+      let modelValue;
+      let prop = this.util.getControlPropertyName(this, property);
+      this.unsubscribe();
+      if (this.arrayObserver) {
+        this.arrayObserver.forEach((arrayProp) => {
+          if (this[arrayProp] instanceof Array) {
+            this.subscription = this.bindingInstance.collectionObserver(this[arrayProp]).subscribe((e) => {
+              this.update(e);
+            });
+          }
+        });
+      }
+      if (prop) {
+        if (prop === 'widget') {
+          return;
+        } else if (prop !== 'options') {
+          modelValue = this.widget.model[prop];
+          let isTwoway = typeof modelValue === 'function';
+          if (isTwoway) {
+            modelValue = modelValue();
+          }
+          if (modelValue !== newValue) {
+            if (isTwoway) {
+              newValue = this.addTwoways(prop);
+            }
+            this.widget.option(prop, newValue);
+          }
+        } else {
+          this.widget.option(newValue);
+        }
+      }
+    }
+  }
+
+  update(e) {
+    let modelValue;
+    let newVal;
+    if (e.length) {
+      this.arrayObserver.forEach((arrayProp) => {
+        if (this[arrayProp] instanceof Array) {
+          let prop = this.util.getControlPropertyName(this, arrayProp);
+          modelValue = this.widget.model[prop];
+          if (typeof modelValue === 'function') {
+            modelValue = modelValue();
+            newVal = modelValue;
+            newVal = this.addTwoways(prop);
+            this.widget.option(prop, newVal);
+          } else {
+            this.widget.option(prop, modelValue);
+          }
+        }
+      });
+    }
+  }
+
+  detached() {
+    if (this.templateProcessor) {
+      this.templateProcessor.clearTempalte();
+    }
+    if (this.widget) {
+      this.widget.destroy();
+    }
+  }
+}
 
 @inlineView(`${constants.aureliaTemplateString}`)
 @customElement(`${constants.elementPrefix}sheet`)
