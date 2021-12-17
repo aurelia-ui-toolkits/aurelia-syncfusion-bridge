@@ -445,10 +445,11 @@ export class ejAccordion extends WidgetBase {
 }
 
 
-@customAttribute(`${constants.attributePrefix}autocomplete`)
-    @generateBindables('ejAutocomplete', ['addNewText', 'allowAddNew', 'allowSorting', 'animateType', 'autoFocus', 'caseSensitiveSearch', 'cssClass', 'dataSource', 'delaySuggestionTimeout', 'delimiterChar', 'emptyResultText', 'enableAutoFill', 'enabled', 'enableDistinct', 'enablePersistence', 'enableRTL', 'fields', 'filterType', 'height', 'highlightSearch', 'itemsCount', 'ignoreAccent', 'locale', 'minCharacter', 'multiColumnSettings', 'multiSelectMode', 'popupHeight', 'popupWidth', 'query', 'readOnly', 'selectValueByKey', 'showEmptyResultText', 'showLoadingIcon', 'showPopupButton', 'showRoundedCorner', 'showResetIcon', 'sortOrder', 'template', 'validationMessage', 'validationRules', 'value', 'visible', 'watermarkText', 'width'], ['value', 'selectValueByKey'], {'enableRTL': ['enableRtl']})
+@customElement(`${constants.elementPrefix}barcode`)
+@inlineView(`${constants.aureliaTemplateString}`)
+@generateBindables('ejBarcode', ['barcodeToTextGapHeight', 'barHeight', 'darkBarColor', 'displayText', 'enabled', 'encodeStartStopSymbol', 'lightBarColor', 'narrowBarWidth', 'quietZone', 'symbologyType', 'text', 'textColor', 'wideBarWidth', 'xDimension'])
 @inject(Element)
-export class ejAutocomplete extends WidgetBase {
+export class ejBarcode extends WidgetBase {
   constructor(element) {
     super();
     this.element = element;
@@ -456,11 +457,10 @@ export class ejAutocomplete extends WidgetBase {
 }
 
 
-@customElement(`${constants.elementPrefix}barcode`)
-@inlineView(`${constants.aureliaTemplateString}`)
-@generateBindables('ejBarcode', ['barcodeToTextGapHeight', 'barHeight', 'darkBarColor', 'displayText', 'enabled', 'encodeStartStopSymbol', 'lightBarColor', 'narrowBarWidth', 'quietZone', 'symbologyType', 'text', 'textColor', 'wideBarWidth', 'xDimension'])
+@customAttribute(`${constants.attributePrefix}autocomplete`)
+    @generateBindables('ejAutocomplete', ['addNewText', 'allowAddNew', 'allowSorting', 'animateType', 'autoFocus', 'caseSensitiveSearch', 'cssClass', 'dataSource', 'delaySuggestionTimeout', 'delimiterChar', 'emptyResultText', 'enableAutoFill', 'enabled', 'enableDistinct', 'enablePersistence', 'enableRTL', 'fields', 'filterType', 'height', 'highlightSearch', 'itemsCount', 'ignoreAccent', 'locale', 'minCharacter', 'multiColumnSettings', 'multiSelectMode', 'popupHeight', 'popupWidth', 'query', 'readOnly', 'selectValueByKey', 'showEmptyResultText', 'showLoadingIcon', 'showPopupButton', 'showRoundedCorner', 'showResetIcon', 'sortOrder', 'template', 'validationMessage', 'validationRules', 'value', 'visible', 'watermarkText', 'width'], ['value', 'selectValueByKey'], {'enableRTL': ['enableRtl']})
 @inject(Element)
-export class ejBarcode extends WidgetBase {
+export class ejAutocomplete extends WidgetBase {
   constructor(element) {
     super();
     this.element = element;
@@ -527,10 +527,11 @@ export class Series {
 }
 
 
-@customAttribute(`${constants.attributePrefix}check-box`)
-    @generateBindables('ejCheckBox', ['checked', 'checkState', 'cssClass', 'enabled', 'enablePersistence', 'enableRTL', 'enableTriState', 'htmlAttributes', 'id', 'idPrefix', 'name', 'showRoundedCorner', 'size', 'text', 'validationMessage', 'validationRules', 'value'], ['checked', 'checkState'], {'enableRTL': ['enableRtl']})
+@customElement(`${constants.elementPrefix}circular-gauge`)
+@inlineView(`${constants.aureliaTemplateString}`)
+@generateBindables('ejCircularGauge', ['animationSpeed', 'backgroundColor', 'distanceFromCorner', 'rangeZOrder', 'enableAnimation', 'enableGroupSeparator', 'enableResize', 'exportSettings', 'frame', 'gaugePosition', 'height', 'interiorGradient', 'isRadialGradient', 'isResponsive', 'locale', 'maximum', 'minimum', 'outerCustomLabelPosition', 'radius', 'readOnly', 'scales', 'theme', 'legend', 'tooltip', 'value', 'width'], ['value', 'minimum', 'maximum'])
 @inject(Element)
-export class ejCheckBox extends WidgetBase {
+export class ejCircularGauge extends WidgetBase {
   constructor(element) {
     super();
     this.element = element;
@@ -538,11 +539,10 @@ export class ejCheckBox extends WidgetBase {
 }
 
 
-@customElement(`${constants.elementPrefix}circular-gauge`)
-@inlineView(`${constants.aureliaTemplateString}`)
-@generateBindables('ejCircularGauge', ['animationSpeed', 'backgroundColor', 'distanceFromCorner', 'rangeZOrder', 'enableAnimation', 'enableGroupSeparator', 'enableResize', 'exportSettings', 'frame', 'gaugePosition', 'height', 'interiorGradient', 'isRadialGradient', 'isResponsive', 'locale', 'maximum', 'minimum', 'outerCustomLabelPosition', 'radius', 'readOnly', 'scales', 'theme', 'legend', 'tooltip', 'value', 'width'], ['value', 'minimum', 'maximum'])
+@customAttribute(`${constants.attributePrefix}check-box`)
+    @generateBindables('ejCheckBox', ['checked', 'checkState', 'cssClass', 'enabled', 'enablePersistence', 'enableRTL', 'enableTriState', 'htmlAttributes', 'id', 'idPrefix', 'name', 'showRoundedCorner', 'size', 'text', 'validationMessage', 'validationRules', 'value'], ['checked', 'checkState'], {'enableRTL': ['enableRtl']})
 @inject(Element)
-export class ejCircularGauge extends WidgetBase {
+export class ejCheckBox extends WidgetBase {
   constructor(element) {
     super();
     this.element = element;
@@ -1389,18 +1389,6 @@ export class ejPager extends WidgetBase {
 }
 
 
-@customElement(`${constants.elementPrefix}pdf-viewer`)
-@inlineView(`${constants.aureliaTemplateString}`)
-@generateBindables('ejPdfViewer', ['locale', 'toolbarSettings', 'serverActionSettings', 'serviceUrl', 'documentPath', 'enableTextMarkupAnnotations', 'enableHighlightAnnotation', 'enableUnderlineAnnotation', 'enableStrikethroughAnnotation', 'enableSignature', 'strikethroughSettings', 'underlineSettings', 'highlightSettings', 'signatureSettings', 'textSelectionContextMenu', 'annotationContextMenu', 'annotationType', 'pageCount', 'currentPageNumber', 'zoomPercentage', 'pdfService', 'interactionMode', 'bufferingMode', 'hyperlinkOpenState', 'enableHyperlink', 'enableTextSelection', 'isResponsive', 'isDocumentEdited', 'allowClientBuffering', 'fileName'])
-@inject(Element)
-export class ejPdfViewer extends WidgetBase {
-  constructor(element) {
-    super();
-    this.element = element;
-  }
-}
-
-
 @customAttribute(`${constants.attributePrefix}percentage-textbox`)
     @generateBindables('ejPercentageTextbox', ['currencySymbol', 'cssClass', 'decimalPlaces', 'enabled', 'enablePersistence', 'enableRTL', 'enableStrictMode', 'groupSize', 'groupSeparator', 'height', 'htmlAttributes', 'incrementStep', 'locale', 'maxValue', 'minValue', 'name', 'negativePattern', 'positivePattern', 'readOnly', 'showRoundedCorner', 'showSpinButton', 'validateOnType', 'validationMessage', 'validationRules', 'value', 'watermarkText', 'width'], ['value'], {'enableRTL': ['enableRtl']})
 @inject(Element)
@@ -1408,6 +1396,18 @@ export class ejPercentageTextbox extends WidgetBase {
   constructor(element) {
     super();
     this.isEditor = true;
+    this.element = element;
+  }
+}
+
+
+@customElement(`${constants.elementPrefix}pdf-viewer`)
+@inlineView(`${constants.aureliaTemplateString}`)
+@generateBindables('ejPdfViewer', ['locale', 'toolbarSettings', 'serverActionSettings', 'serviceUrl', 'documentPath', 'enableTextMarkupAnnotations', 'enableHighlightAnnotation', 'enableUnderlineAnnotation', 'enableStrikethroughAnnotation', 'enableSignature', 'strikethroughSettings', 'underlineSettings', 'highlightSettings', 'signatureSettings', 'textSelectionContextMenu', 'annotationContextMenu', 'annotationType', 'pageCount', 'currentPageNumber', 'zoomPercentage', 'pdfService', 'interactionMode', 'bufferingMode', 'hyperlinkOpenState', 'enableHyperlink', 'enableTextSelection', 'isResponsive', 'isDocumentEdited', 'allowClientBuffering', 'fileName'])
+@inject(Element)
+export class ejPdfViewer extends WidgetBase {
+  constructor(element) {
+    super();
     this.element = element;
   }
 }
@@ -1517,11 +1517,10 @@ export class ejRadialMenu extends WidgetBase {
 }
 
 
-@customElement(`${constants.elementPrefix}radial-slider`)
-@inlineView(`${constants.aureliaTemplateString}`)
-@generateBindables('ejRadialSlider', ['autoOpen', 'cssClass', 'enableAnimation', 'enableRoundOff', 'endAngle', 'inline', 'innerCircleImageClass', 'innerCircleImageUrl', 'labelSpace', 'locale', 'radius', 'showInnerCircle', 'startAngle', 'strokeWidth', 'ticks', 'value'], ['value', 'ticks'])
+@customAttribute(`${constants.attributePrefix}radio-button`)
+@generateBindables('ejRadioButton', ['checked', 'cssClass', 'enabled', 'enablePersistence', 'enableRTL', 'htmlAttributes', 'id', 'idPrefix', 'name', 'size', 'text', 'validationMessage', 'validationRules', 'value'], [], {'enableRTL': ['enableRtl']})
 @inject(Element)
-export class ejRadialSlider extends WidgetBase {
+export class ejRadioButton extends WidgetBase {
   constructor(element) {
     super();
     this.element = element;
@@ -1529,10 +1528,11 @@ export class ejRadialSlider extends WidgetBase {
 }
 
 
-@customAttribute(`${constants.attributePrefix}radio-button`)
-@generateBindables('ejRadioButton', ['checked', 'cssClass', 'enabled', 'enablePersistence', 'enableRTL', 'htmlAttributes', 'id', 'idPrefix', 'name', 'size', 'text', 'validationMessage', 'validationRules', 'value'], [], {'enableRTL': ['enableRtl']})
+@customElement(`${constants.elementPrefix}radial-slider`)
+@inlineView(`${constants.aureliaTemplateString}`)
+@generateBindables('ejRadialSlider', ['autoOpen', 'cssClass', 'enableAnimation', 'enableRoundOff', 'endAngle', 'inline', 'innerCircleImageClass', 'innerCircleImageUrl', 'labelSpace', 'locale', 'radius', 'showInnerCircle', 'startAngle', 'strokeWidth', 'ticks', 'value'], ['value', 'ticks'])
 @inject(Element)
-export class ejRadioButton extends WidgetBase {
+export class ejRadialSlider extends WidgetBase {
   constructor(element) {
     super();
     this.element = element;
@@ -1888,6 +1888,17 @@ export class TreeGridColumn {
 }
 
 
+@customAttribute(`${constants.attributePrefix}tree-view`)
+@generateBindables('ejTreeView', ['allowDragAndDrop', 'allowDragAndDropAcrossControl', 'allowDropSibling', 'allowDropChild', 'allowEditing', 'allowKeyboardNavigation', 'allowMultiSelection', 'autoCheck', 'autoCheckParentNode', 'checkedNodes', 'cssClass', 'enableAnimation', 'enabled', 'enableMultipleExpand', 'enablePersistence', 'enableRTL', 'expandedNodes', 'expandOn', 'fields', 'fullRowSelect', 'height', 'htmlAttributes', 'loadOnDemand', 'selectedNode', 'selectedNodes', 'showCheckbox', 'sortSettings', 'template', 'width'], [], {'enableRTL': ['enableRtl']})
+@inject(Element)
+export class ejTreeView extends WidgetBase {
+  constructor(element) {
+    super();
+    this.element = element;
+  }
+}
+
+
 @inlineView(`${constants.aureliaTemplateString}`)
 @customElement(`${constants.elementPrefix}level`)
 
@@ -1908,17 +1919,6 @@ export class ejTreeMap extends WidgetBase {
     this.element = element;
     this.hasChildProperty = true;
     this.childPropertyName = 'levels';
-  }
-}
-
-
-@customAttribute(`${constants.attributePrefix}tree-view`)
-@generateBindables('ejTreeView', ['allowDragAndDrop', 'allowDragAndDropAcrossControl', 'allowDropSibling', 'allowDropChild', 'allowEditing', 'allowKeyboardNavigation', 'allowMultiSelection', 'autoCheck', 'autoCheckParentNode', 'checkedNodes', 'cssClass', 'enableAnimation', 'enabled', 'enableMultipleExpand', 'enablePersistence', 'enableRTL', 'expandedNodes', 'expandOn', 'fields', 'fullRowSelect', 'height', 'htmlAttributes', 'loadOnDemand', 'selectedNode', 'selectedNodes', 'showCheckbox', 'sortSettings', 'template', 'width'], [], {'enableRTL': ['enableRtl']})
-@inject(Element)
-export class ejTreeView extends WidgetBase {
-  constructor(element) {
-    super();
-    this.element = element;
   }
 }
 

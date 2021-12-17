@@ -127,10 +127,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejAccordion extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejAutocomplete extends WidgetBase {
+  export class ejBarcode extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejBarcode extends WidgetBase {
+  export class ejAutocomplete extends WidgetBase {
     constructor(element?: any);
   }
   export class ejBulletGraph extends WidgetBase {
@@ -156,10 +156,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejCircularGauge extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejColorPicker extends WidgetBase {
+  export class ejComboBox extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejComboBox extends WidgetBase {
+  export class ejColorPicker extends WidgetBase {
     constructor(element?: any);
   }
   export class ejCurrencyTextbox extends WidgetBase {
@@ -174,10 +174,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejDateTimePicker extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejDiagram extends WidgetBase {
+  export class ejDialog extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejDialog extends WidgetBase {
+  export class ejDiagram extends WidgetBase {
     constructor(element?: any);
   }
   export class ejDigitalGauge extends WidgetBase {
@@ -192,6 +192,9 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejGantt extends WidgetBase {
     constructor(element?: any);
   }
+  export class ejGroupButton extends WidgetBase {
+    constructor(element?: any);
+  }
   export class Column {
     template: any;
     setTemplates(): any;
@@ -199,9 +202,6 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejGrid extends WidgetBase {
     columns: any;
     constructor(element?: any, templateEngine?: any);
-  }
-  export class ejGroupButton extends WidgetBase {
-    constructor(element?: any);
   }
   export class ejHeatMap extends WidgetBase {
     constructor(element?: any);
@@ -253,10 +253,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejPdfViewer extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPercentageTextbox extends WidgetBase {
+  export class ejPivotChart extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPivotChart extends WidgetBase {
+  export class ejPercentageTextbox extends WidgetBase {
     constructor(element?: any);
   }
   export class ejPivotGauge extends WidgetBase {
@@ -268,10 +268,13 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejPivotSchemaDesigner extends WidgetBase {
     constructor(element?: any);
   }
+  export class ejProgressBar extends WidgetBase {
+    constructor(element?: any);
+  }
   export class ejPivotTreeMap extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejProgressBar extends WidgetBase {
+  export class ejRadialSlider extends WidgetBase {
     constructor(element?: any);
   }
   export class Item {
@@ -281,9 +284,6 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejRadialMenu extends WidgetBase {
     items: any;
     constructor(element?: any, templateEngine?: any);
-  }
-  export class ejRadialSlider extends WidgetBase {
-    constructor(element?: any);
   }
   export class ejRadioButton extends WidgetBase {
     constructor(element?: any);
@@ -295,16 +295,13 @@ declare module 'aurelia-syncfusion-bridge' {
   export class RangeSeries {
   
   }
-  export class ejRating extends WidgetBase {
-    constructor(element?: any);
-  }
   export class ejRibbon extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejRotator extends WidgetBase {
+  export class ejRating extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejRte extends WidgetBase {
+  export class ejRotator extends WidgetBase {
     constructor(element?: any);
   }
   export class ejSchedule extends WidgetBase {
@@ -313,6 +310,9 @@ declare module 'aurelia-syncfusion-bridge' {
   }
   export class ScheduleResource {
   
+  }
+  export class ejRte extends WidgetBase {
+    constructor(element?: any);
   }
   export class ejScroller extends WidgetBase {
     constructor(element?: any);
@@ -329,10 +329,72 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejSpellCheck extends WidgetBase {
     constructor(element?: any);
   }
+  export class ejSplitter extends WidgetBase {
+    constructor(element?: any);
+  }
   export class ejSplitButton extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejSplitter extends WidgetBase {
+  export class Sheet {
+  
+  }
+  export class ejSpreadsheet extends WidgetBase {
+    sheets: any;
+    constructor(element?: any);
+  }
+  export class ejSymbolPalette extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejSunburstChart extends WidgetBase {
+    levels: any;
+    constructor(element?: any);
+  }
+  export class SunburstLevels {
+  
+  }
+  export class ejTab extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejTagCloud extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejTile extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejTimePicker extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejToggleButton extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejToolbar extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejTooltip extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejTreeGrid extends WidgetBase {
+    columns: any;
+    constructor(element?: any, templateEngine?: any);
+  }
+  export class TreeGridColumn {
+    angularTemplate: any;
+    setTemplates(): any;
+  }
+  export class Level {
+  
+  }
+  export class ejTreeMap extends WidgetBase {
+    levels: any;
+    constructor(element?: any);
+  }
+  export class ejTreeView extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejUploadbox extends WidgetBase {
+    constructor(element?: any);
+  }
+  export class ejWaitingPopup extends WidgetBase {
     constructor(element?: any);
   }
   export {
@@ -412,67 +474,5 @@ declare module 'aurelia-syncfusion-bridge' {
     propertyChanged(property?: any, newValue?: any, oldValue?: any): any;
     update(e?: any): any;
     detached(): any;
-  }
-  export class Sheet {
-  
-  }
-  export class ejSpreadsheet extends WidgetBase {
-    sheets: any;
-    constructor(element?: any);
-  }
-  export class ejSunburstChart extends WidgetBase {
-    levels: any;
-    constructor(element?: any);
-  }
-  export class SunburstLevels {
-  
-  }
-  export class ejSymbolPalette extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejTab extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejTagCloud extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejTile extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejTimePicker extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejToggleButton extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejToolbar extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejTooltip extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejTreeGrid extends WidgetBase {
-    columns: any;
-    constructor(element?: any, templateEngine?: any);
-  }
-  export class TreeGridColumn {
-    angularTemplate: any;
-    setTemplates(): any;
-  }
-  export class Level {
-  
-  }
-  export class ejTreeMap extends WidgetBase {
-    levels: any;
-    constructor(element?: any);
-  }
-  export class ejTreeView extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejUploadbox extends WidgetBase {
-    constructor(element?: any);
-  }
-  export class ejWaitingPopup extends WidgetBase {
-    constructor(element?: any);
   }
 }

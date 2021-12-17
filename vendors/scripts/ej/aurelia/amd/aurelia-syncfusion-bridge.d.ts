@@ -131,10 +131,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejAccordion extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejAutocomplete extends WidgetBase {
+  export class ejBarcode extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejBarcode extends WidgetBase {
+  export class ejAutocomplete extends WidgetBase {
     constructor(element?: any);
   }
   export class ejBulletGraph extends WidgetBase {
@@ -154,10 +154,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class Series {
   
   }
-  export class ejCheckBox extends WidgetBase {
+  export class ejCircularGauge extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejCircularGauge extends WidgetBase {
+  export class ejCheckBox extends WidgetBase {
     constructor(element?: any);
   }
   export class ejColorPicker extends WidgetBase {
@@ -332,10 +332,10 @@ declare module 'aurelia-syncfusion-bridge' {
   export class ejPager extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPdfViewer extends WidgetBase {
+  export class ejPercentageTextbox extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejPercentageTextbox extends WidgetBase {
+  export class ejPdfViewer extends WidgetBase {
     constructor(element?: any);
   }
   export class ejPivotChart extends WidgetBase {
@@ -364,10 +364,10 @@ declare module 'aurelia-syncfusion-bridge' {
     items: any;
     constructor(element?: any, templateEngine?: any);
   }
-  export class ejRadialSlider extends WidgetBase {
+  export class ejRadioButton extends WidgetBase {
     constructor(element?: any);
   }
-  export class ejRadioButton extends WidgetBase {
+  export class ejRadialSlider extends WidgetBase {
     constructor(element?: any);
   }
   export class ejRangeNavigator extends WidgetBase {
@@ -463,14 +463,14 @@ declare module 'aurelia-syncfusion-bridge' {
     angularTemplate: any;
     setTemplates(): any;
   }
+  export class ejTreeView extends WidgetBase {
+    constructor(element?: any);
+  }
   export class Level {
   
   }
   export class ejTreeMap extends WidgetBase {
     levels: any;
-    constructor(element?: any);
-  }
-  export class ejTreeView extends WidgetBase {
     constructor(element?: any);
   }
   export class ejUploadbox extends WidgetBase {
