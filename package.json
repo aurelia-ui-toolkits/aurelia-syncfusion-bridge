@@ -1,6 +1,6 @@
 {
   "name": "aurelia-syncfusion-bridge",
-  "version": "18.0.1",
+  "version": "18.0.2",
   "registry": "github",
   "description": "A set of Syncfusion wrappers for Aurelia allowing developers to easily use Syncfusion components in their Aurelia application",
   "keywords": [
