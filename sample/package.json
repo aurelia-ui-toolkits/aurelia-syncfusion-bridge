@@ -16,7 +16,7 @@
       "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0",
       "bootstrap": "github:twbs/bootstrap@3.3.7",
       "css": "github:systemjs/plugin-css@0.1.20",
-      "google/code-prettify": "github:googlearchive/code-prettify@master",
+      "google/code-prettify": "github:google/code-prettify@master",
       "jquery": "npm:jquery@^3.2.1",
       "jquery-validation": "npm:jquery-validation@1.15.0",
       "jquery-validation-unobtrusive": "npm:jquery-validation-unobtrusive@3.2.6",
@@ -35,7 +35,7 @@
       "babel": "npm:babel-core@^5.8.24",
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4",
-      "polymer/mutationobservers": "github:googlearchive/MutationObservers@^0.4.2",
+      "polymer/mutationobservers": "github:polymer/mutationobservers@^0.4.2",
       "text": "github:systemjs/plugin-text@0.0.4"
     },
     "overrides": {
@@ -45,7 +45,7 @@
     }
   },
   "devDependencies": {
-    "left-pad": "https://github.com/azer/left-pad.git#bff80e3ef0db0bfaba7698606c4f623433d14355",
+    "left-pad": "git://github.com/azer/left-pad.git#bff80e3ef0db0bfaba7698606c4f623433d14355",
     "babel-eslint": "^4.1.1",
     "jspm": "0.16.15",
     "phantomjs-polyfill": "0.0.2"
