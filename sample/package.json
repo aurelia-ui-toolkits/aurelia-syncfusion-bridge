@@ -45,7 +45,7 @@
     }
   },
   "devDependencies": {
-    "left-pad": "git://github.com/azer/left-pad.git#bff80e3ef0db0bfaba7698606c4f623433d14355",
+    "left-pad": "https://github.com/azer/left-pad.git#bff80e3ef0db0bfaba7698606c4f623433d14355",
     "babel-eslint": "^4.1.1",
     "jspm": "0.16.15",
     "phantomjs-polyfill": "0.0.2"
