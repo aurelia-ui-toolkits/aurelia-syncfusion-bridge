@@ -1,6 +1,6 @@
 {
   "name": "aurelia-syncfusion-bridge",
-  "version": "0.2.2",
+  "version": "20.0.2",
   "registry": "github",
   "description": "A set of Syncfusion wrappers for Aurelia allowing developers to easily use Syncfusion components in their Aurelia application",
   "keywords": [
@@ -93,7 +93,7 @@
     "karma-jasmine": "^0.2.3",
     "karma-jspm": "^2.0.2",
     "karma-sourcemap-loader": "^0.3.6",
-    "left-pad": "git://github.com/azer/left-pad.git#bff80e3ef0db0bfaba7698606c4f623433d14355",
+    "left-pad": "https://github.com/azer/left-pad.git#bff80e3ef0db0bfaba7698606c4f623433d14355",
     "object.assign": "^1.0.3",
     "phantomjs-polyfill": "0.0.1",
     "require-dir": "^0.3.2",
